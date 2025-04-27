@@ -2,7 +2,8 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { createClient } from "@supabase/supabase-js";
-import { getNotes, postNotes } from "./controllers/note.controller";
+import { getNotes, postNotes } from "./controllers/note.controller.js";
+import { authenticateUser } from "./middlewares/authenticateUser.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,8 +18,8 @@ const supabaseKey = process.env.SUPABASE_KEY;
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Routes
-app.get("/notes", getNotes);
-app.post("/notes", postNotes);
+app.get("/notes", authenticateUser, getNotes);
+app.post("/notes", authenticateUser, postNotes);
 
 // Start the server
 app.listen(port, () => {
