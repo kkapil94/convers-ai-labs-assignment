@@ -1,11 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SECRET; // Using service role key for backend operations
+import { supabase } from "../server.js";
 
 export const getNotes = async (req, res) => {
   try {
-    const supabase = createClient(supabaseUrl, supabaseKey);
     const userId = req.user.id;
 
     // Fetch notes for the authenticated user
